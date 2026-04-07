@@ -1,0 +1,254 @@
+[
+  {
+    "mode": "hybrid",
+    "filename": "episode_hybrid_1775211260.json",
+    "num_steps": 10,
+    "total_reward": 49.49999999999999,
+    "easy": {
+      "task": "cost-optimisation",
+      "passed": true,
+      "score": 0.6667,
+      "breakdown": {
+        "savings_score": 0.0,
+        "efficiency_score": 1.0,
+        "action_score": 1.0
+      },
+      "violations": []
+    },
+    "hard": {
+      "task": "production-protection",
+      "passed": true,
+      "score": 1.0,
+      "breakdown": {
+        "uptime_score (\u00d70.40)": 1.0,
+        "safety_score (\u00d70.35)": 1.0,
+        "cost_control_score (\u00d70.25)": 1.0
+      },
+      "violations": []
+    }
+  },
+  {
+    "mode": "hybrid",
+    "filename": "episode_hybrid_1775211779.json",
+    "num_steps": 10,
+    "total_reward": 49.49999999999999,
+    "easy": {
+      "task": "cost-optimisation",
+      "passed": true,
+      "score": 0.6667,
+      "breakdown": {
+        "savings_score": 0.0,
+        "efficiency_score": 1.0,
+        "action_score": 1.0
+      },
+      "violations": []
+    },
+    "hard": {
+      "task": "production-protection",
+      "passed": true,
+      "score": 1.0,
+      "breakdown": {
+        "uptime_score (\u00d70.40)": 1.0,
+        "safety_score (\u00d70.35)": 1.0,
+        "cost_control_score (\u00d70.25)": 1.0
+      },
+      "violations": []
+    }
+  },
+  {
+    "mode": "hybrid",
+    "filename": "episode_hybrid_1775212418.json",
+    "num_steps": 10,
+    "total_reward": 49.49999999999999,
+    "easy": {
+      "task": "cost-optimisation",
+      "passed": true,
+      "score": 0.6667,
+      "breakdown": {
+        "savings_score": 0.0,
+        "efficiency_score": 1.0,
+        "action_score": 1.0
+      },
+      "violations": []
+    },
+    "hard": {
+      "task": "production-protection",
+      "passed": true,
+      "score": 1.0,
+      "breakdown": {
+        "uptime_score (\u00d70.40)": 1.0,
+        "safety_score (\u00d70.35)": 1.0,
+        "cost_control_score (\u00d70.25)": 1.0
+      },
+      "violations": []
+    }
+  },
+  {
+    "mode": "hybrid",
+    "filename": "episode_hybrid_1775212777.json",
+    "num_steps": 10,
+    "total_reward": 49.49999999999999,
+    "easy": {
+      "task": "cost-optimisation",
+      "passed": true,
+      "score": 0.6667,
+      "breakdown": {
+        "savings_score": 0.0,
+        "efficiency_score": 1.0,
+        "action_score": 1.0
+      },
+      "violations": []
+    },
+    "hard": {
+      "task": "production-protection",
+      "passed": true,
+      "score": 1.0,
+      "breakdown": {
+        "uptime_score (\u00d70.40)": 1.0,
+        "safety_score (\u00d70.35)": 1.0,
+        "cost_control_score (\u00d70.25)": 1.0
+      },
+      "violations": []
+    }
+  },
+  {
+    "mode": "rule_based",
+    "filename": "episode_rule_based_1775211259.json",
+    "num_steps": 10,
+    "total_reward": 49.49999999999999,
+    "easy": {
+      "task": "cost-optimisation",
+      "passed": true,
+      "score": 0.6667,
+      "breakdown": {
+        "savings_score": 0.0,
+        "efficiency_score": 1.0,
+        "action_score": 1.0
+      },
+      "violations": []
+    },
+    "hard": {
+      "task": "production-protection",
+      "passed": true,
+      "score": 1.0,
+      "breakdown": {
+        "uptime_score (\u00d70.40)": 1.0,
+        "safety_score (\u00d70.35)": 1.0,
+        "cost_control_score (\u00d70.25)": 1.0
+      },
+      "violations": []
+    }
+  },
+  {
+    "mode": "rule_based",
+    "filename": "episode_rule_based_1775211779.json",
+    "num_steps": 10,
+    "total_reward": 49.49999999999999,
+    "easy": {
+      "task": "cost-optimisation",
+      "passed": true,
+      "score": 0.6667,
+      "breakdown": {
+        "savings_score": 0.0,
+        "efficiency_score": 1.0,
+        "action_score": 1.0
+      },
+      "violations": []
+    },
+    "hard": {
+      "task": "production-protection",
+      "passed": true,
+      "score": 1.0,
+      "breakdown": {
+        "uptime_score (\u00d70.40)": 1.0,
+        "safety_score (\u00d70.35)": 1.0,
+        "cost_control_score (\u00d70.25)": 1.0
+      },
+      "violations": []
+    }
+  },
+  {
+    "mode": "rule_based",
+    "filename": "episode_rule_based_1775211958.json",
+    "num_steps": 10,
+    "total_reward": 49.49999999999999,
+    "easy": {
+      "task": "cost-optimisation",
+      "passed": true,
+      "score": 0.6667,
+      "breakdown": {
+        "savings_score": 0.0,
+        "efficiency_score": 1.0,
+        "action_score": 1.0
+      },
+      "violations": []
+    },
+    "hard": {
+      "task": "production-protection",
+      "passed": true,
+      "score": 1.0,
+      "breakdown": {
+        "uptime_score (\u00d70.40)": 1.0,
+        "safety_score (\u00d70.35)": 1.0,
+        "cost_control_score (\u00d70.25)": 1.0
+      },
+      "violations": []
+    }
+  },
+  {
+    "mode": "rule_based",
+    "filename": "episode_rule_based_1775212418.json",
+    "num_steps": 10,
+    "total_reward": 49.49999999999999,
+    "easy": {
+      "task": "cost-optimisation",
+      "passed": true,
+      "score": 0.6667,
+      "breakdown": {
+        "savings_score": 0.0,
+        "efficiency_score": 1.0,
+        "action_score": 1.0
+      },
+      "violations": []
+    },
+    "hard": {
+      "task": "production-protection",
+      "passed": true,
+      "score": 1.0,
+      "breakdown": {
+        "uptime_score (\u00d70.40)": 1.0,
+        "safety_score (\u00d70.35)": 1.0,
+        "cost_control_score (\u00d70.25)": 1.0
+      },
+      "violations": []
+    }
+  },
+  {
+    "mode": "rule_based",
+    "filename": "episode_rule_based_1775212776.json",
+    "num_steps": 10,
+    "total_reward": 49.49999999999999,
+    "easy": {
+      "task": "cost-optimisation",
+      "passed": true,
+      "score": 0.6667,
+      "breakdown": {
+        "savings_score": 0.0,
+        "efficiency_score": 1.0,
+        "action_score": 1.0
+      },
+      "violations": []
+    },
+    "hard": {
+      "task": "production-protection",
+      "passed": true,
+      "score": 1.0,
+      "breakdown": {
+        "uptime_score (\u00d70.40)": 1.0,
+        "safety_score (\u00d70.35)": 1.0,
+        "cost_control_score (\u00d70.25)": 1.0
+      },
+      "violations": []
+    }
+  }
+]

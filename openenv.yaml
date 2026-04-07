@@ -1,0 +1,9 @@
+version: "1.0.0"
+name: "finops-optimizer-v1"
+description: "AI agent environment for cloud cost optimization."
+entry_point: "src.env:FinOpsEnv"
+tasks:
+  - id: "low-utilization-cleanup"
+    difficulty: "easy"
+  - id: "production-protection"
+    difficulty: "hard"
