@@ -280,6 +280,49 @@ async def delete_episode(episode_id: str) -> dict:
     return {"deleted": episode_id}
 
 # ─────────────────────────────────────────────────────────────────────────────
+# OpenEnv Standard API  (POST /reset, POST /step, GET /state)
+# Required by the OpenEnv submission checker
+# ─────────────────────────────────────────────────────────────────────────────
+
+_global_env = FinOpsEnv()
+
+
+class StepRequestStandard(BaseModel):
+    action: dict[str, Any]
+
+
+@app.post("/reset", tags=["OpenEnv"])
+async def openenv_reset() -> dict[str, Any]:
+    """Reset the environment and return the initial observation (OpenEnv standard)."""
+    obs = _global_env.reset()
+    return obs.model_dump()
+
+
+@app.post("/step", tags=["OpenEnv"])
+async def openenv_step(body: StepRequestStandard) -> dict[str, Any]:
+    """Take one step in the environment (OpenEnv standard)."""
+    from src.models import Action
+    action_data = body.action
+    action = Action(
+        cmd=action_data.get("cmd", "nop"),
+        target_id=action_data.get("target_id"),
+    )
+    obs, reward, done, info = _global_env.step(action)
+    return {
+        "observation": obs.model_dump(),
+        "reward": reward,
+        "done": done,
+        "info": info,
+    }
+
+
+@app.get("/state", tags=["OpenEnv"])
+async def openenv_state() -> dict[str, Any]:
+    """Return the current environment state (OpenEnv standard)."""
+    return _global_env.state().model_dump()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Static UI Mount (MUST BE AT THE END)
 # ─────────────────────────────────────────────────────────────────────────────
 from fastapi.staticfiles import StaticFiles
