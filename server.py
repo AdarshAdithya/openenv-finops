@@ -273,10 +273,11 @@ async def grade_episode(episode_id: str) -> GradeResponse:
     )
 
 
-@app.delete("/episodes/{episode_id}", status_code=204, tags=["Episodes"])
-async def delete_episode(episode_id: str) -> None:
+@app.delete("/episodes/{episode_id}", status_code=200, tags=["Episodes"])
+async def delete_episode(episode_id: str) -> dict:
     """Remove an episode from memory."""
     store.delete(episode_id)
+    return {"deleted": episode_id}
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Static UI Mount (MUST BE AT THE END)
