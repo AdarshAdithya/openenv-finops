@@ -1,3 +1,14 @@
+---
+title: Openenv Finops
+emoji: 💸
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+license: mit
+short_description: FinOps AI agent evaluation environment — REST API
+---
+
 # openenv-finops
 
 A reinforcement-learning environment that simulates a cloud FinOps scenario — agents must cut costs on dev infrastructure without ever touching production services.
