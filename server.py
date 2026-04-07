@@ -330,3 +330,14 @@ import os
 
 if os.path.exists("web"):
     app.mount("/", StaticFiles(directory="web", html=True), name="web")
+
+
+def main():
+    """Entry point for openenv multi-mode deployment (referenced in pyproject.toml)."""
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860)
+
+
+if __name__ == "__main__":
+    main()
+
