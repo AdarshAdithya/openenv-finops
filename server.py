@@ -204,6 +204,8 @@ async def step(episode_id: str, body: StepRequest) -> StepResponse:
     Send an action dict; receive the next observation, reward, and done flag.
     Returns HTTP 409 if the episode has already terminated.
     """
+    from src.models import Action
+
     record = store.get(episode_id)
 
     if record["done"]:
@@ -213,13 +215,22 @@ async def step(episode_id: str, body: StepRequest) -> StepResponse:
         )
 
     env: FinOpsEnv = record["env"]
-    obs, reward, done, info = env.step(body.action)
+
+    # Convert raw dict → Action model (env.step expects Action, not dict)
+    action_data = body.action
+    action = Action(
+        cmd=action_data.get("cmd", "nop"),
+        target_id=action_data.get("target_id"),
+    )
+
+    obs, reward, done, info = env.step(action)
+    obs_dict = obs.model_dump() if hasattr(obs, "model_dump") else dict(obs)
 
     step_idx = len(record["steps"])
     step_record = {
         "step": step_idx,
-        "action": body.action,
-        "observation": obs,
+        "action": action_data,
+        "observation": obs_dict,
         "reward": reward,
         "done": done,
         "info": info,
@@ -230,7 +241,7 @@ async def step(episode_id: str, body: StepRequest) -> StepResponse:
 
     return StepResponse(
         step=step_idx,
-        observation=obs,
+        observation=obs_dict,
         reward=reward,
         done=done,
         info=info,
