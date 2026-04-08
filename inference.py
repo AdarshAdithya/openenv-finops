@@ -82,38 +82,63 @@ def pick_action(observation: dict) -> dict:
 def run(base_url: str, max_steps: int = 20) -> None:
     base_url = base_url.rstrip("/")
 
-    # Step 1: Reset — get episode_id + initial observation
+    episode_id = None
+    obs = None
+
+    # Strategy 1: POST /episodes → always returns {episode_id, initial_observation}
     try:
-        reset_resp = post(f"{base_url}/reset")
-    except RuntimeError as exc:
-        print(f"[ERROR] Failed to reset environment: {exc}", file=sys.stderr)
-        sys.exit(1)
+        resp = post(f"{base_url}/episodes")
+        episode_id = resp.get("episode_id")
+        obs = resp.get("initial_observation", resp.get("observation", {}))
+        if episode_id:
+            print(f"[reset] via /episodes  episode_id={episode_id}  "
+                  f"total_cost={obs.get('total_cost', 0.0):.2f}  "
+                  f"resources={len(obs.get('resources', []))}")
+    except RuntimeError:
+        pass
 
-    episode_id = reset_resp.get("episode_id")
-    obs = reset_resp.get("observation", reset_resp)  # fallback if flat response
-
+    # Strategy 2: POST /reset → new format returns {episode_id, observation}
     if not episode_id:
-        print("[ERROR] /reset did not return an episode_id", file=sys.stderr)
-        sys.exit(1)
+        try:
+            resp = post(f"{base_url}/reset")
+            episode_id = resp.get("episode_id")
+            obs = resp.get("observation", resp)  # flat fallback
+            if episode_id:
+                print(f"[reset] via /reset  episode_id={episode_id}  "
+                      f"total_cost={obs.get('total_cost', 0.0):.2f}  "
+                      f"resources={len(obs.get('resources', []))}")
+        except RuntimeError as exc:
+            print(f"[ERROR] /reset failed: {exc}", file=sys.stderr)
+            sys.exit(1)
 
-    total_cost = obs.get("total_cost", 0.0)
-    n_resources = len(obs.get("resources", []))
-    print(f"[reset] episode_id={episode_id}  total_cost={total_cost:.2f}  resources={n_resources}")
+    # Strategy 3: Classic OpenEnv — /reset returned flat obs, use POST /step
+    use_classic_step = (episode_id is None)
+    if use_classic_step:
+        # obs already set from /reset response (flat observation dict)
+        print(f"[reset] via /reset (classic)  "
+              f"total_cost={obs.get('total_cost', 0.0):.2f}  "
+              f"resources={len(obs.get('resources', []))}")
 
-    # Step 2: Step loop
+    # ── Step loop ──────────────────────────────────────────────────────────────
     total_reward = 0.0
-    step_url = f"{base_url}/episodes/{episode_id}/step"
 
     for step_num in range(1, max_steps + 1):
         action = pick_action(obs)
 
         try:
-            result = post(step_url, {"action": action})
+            if use_classic_step:
+                result = post(f"{base_url}/step", {"action": action})
+                obs    = result.get("observation", {})
+            else:
+                result = post(
+                    f"{base_url}/episodes/{episode_id}/step",
+                    {"action": action},
+                )
+                obs = result.get("observation", {})
         except RuntimeError as exc:
             print(f"[ERROR] Step {step_num} failed: {exc}", file=sys.stderr)
             sys.exit(1)
 
-        obs    = result.get("observation", {})
         reward = result.get("reward", 0.0)
         done   = result.get("done", False)
         total_reward += reward
@@ -130,6 +155,7 @@ def run(base_url: str, max_steps: int = 20) -> None:
 
     print(f"\nEpisode finished. Total reward: {total_reward:+.2f}")
     sys.exit(0)
+
 
 
 # ── Entry point ───────────────────────────────────────────────────────────────
