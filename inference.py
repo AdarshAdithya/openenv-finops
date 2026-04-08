@@ -4,6 +4,9 @@ inference.py — OpenEnv-compatible inference script for openenv-finops.
 Connects to the running environment server and runs a rule-based agent
 using the standard OpenEnv API (POST /reset, POST /step, GET /state).
 
+Uses only Python standard library modules (urllib) so it runs in any
+bare Python environment without requiring pip installs.
+
 Usage:
     python inference.py --base-url http://localhost:7860
     python inference.py --base-url https://adarshmukunda-openenv-finops.hf.space
@@ -11,7 +14,25 @@ Usage:
 
 import argparse
 import json
-import requests
+import urllib.request
+import urllib.error
+
+
+def _post(url: str, payload: dict | None = None, timeout: int = 30) -> dict:
+    """POST JSON to url, return parsed JSON response."""
+    data = json.dumps(payload or {}).encode("utf-8")
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"HTTP {e.code} from {url}: {body}") from e
 
 
 def pick_action(observation: dict) -> dict:
@@ -35,21 +56,13 @@ def run(base_url: str, max_steps: int = 20) -> None:
     base_url = base_url.rstrip("/")
 
     # Reset
-    resp = requests.post(f"{base_url}/reset", timeout=30)
-    resp.raise_for_status()
-    obs = resp.json()
+    obs = _post(f"{base_url}/reset")
     print(f"[reset] total_cost={obs['total_cost']:.2f}  resources={len(obs['resources'])}")
 
     total_reward = 0.0
     for step in range(max_steps):
         action = pick_action(obs)
-        resp = requests.post(
-            f"{base_url}/step",
-            json={"action": action},
-            timeout=30,
-        )
-        resp.raise_for_status()
-        result = resp.json()
+        result = _post(f"{base_url}/step", {"action": action})
 
         obs = result["observation"]
         reward = result["reward"]
