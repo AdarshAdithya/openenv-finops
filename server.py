@@ -293,9 +293,14 @@ class StepRequestStandard(BaseModel):
 
 @app.post("/reset", tags=["OpenEnv"])
 async def openenv_reset() -> dict[str, Any]:
-    """Reset the environment and return the initial observation (OpenEnv standard)."""
-    obs = _global_env.reset()
-    return obs.model_dump()
+    """Reset the environment, create a new tracked episode, and return episode_id + observation."""
+    episode_id, record = store.create()
+    initial_obs = record["initial_obs"]
+    obs_dict = initial_obs.model_dump() if hasattr(initial_obs, "model_dump") else dict(initial_obs)
+    return {
+        "episode_id": episode_id,
+        "observation": obs_dict,
+    }
 
 
 @app.post("/step", tags=["OpenEnv"])
