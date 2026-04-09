@@ -120,3 +120,8 @@ async def delete_episode(eid: str): store.delete(eid)
 
 from fastapi.staticfiles import StaticFiles
 if os.path.exists('web'): app.mount('/', StaticFiles(directory='web', html=True), name='web')
+
+@app.post("/reset")
+async def reset():
+    eid, rec = store.create()
+    return {"episode_id": eid, "initial_observation": rec["initial_obs"]}
