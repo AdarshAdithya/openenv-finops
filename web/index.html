@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud FinOps Control Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="ambient-glow"></div>
+
+    <main class="dashboard">
+        <!-- Sidebar: Episode State -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo"></div>
+                <h1>FinOps<span>Agent</span></h1>
+            </div>
+
+            <div class="stats-panel glass">
+                <h3>Global Spend</h3>
+                <div class="metric glow-text">
+                    $<span id="total-cost">0.00</span>
+                    <span class="sub-metric">/ month</span>
+                </div>
+            </div>
+
+            <div class="controls glass">
+                <h3>Simulation Controls</h3>
+                <button id="btn-start" class="btn primary">Start New Episode</button>
+                <div class="step-tracker">
+                    <span>Step:</span>
+                    <span id="step-counter" class="mono">0 / 10</span>
+                </div>
+                <button id="btn-nop" class="btn secondary" disabled>Advance Time (Nop)</button>
+                <button id="btn-grade" class="btn accent" disabled>Trigger Grading</button>
+            </div>
+
+            <div class="logs-panel glass">
+                <h3>Action Logs</h3>
+                <div id="activity-log" class="log-container mono">
+                    <!-- Logs mapped here -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content: Resource Grid -->
+        <section class="main-content">
+            <header class="top-nav">
+                <h2>Active Infrastructure Pipeline</h2>
+                <div class="status-chip connection"><span class="dot"></span> Online</div>
+            </header>
+
+            <div id="resource-grid" class="grid">
+                <!-- Waiting state -->
+                <div class="empty-state">
+                    <h3>No Active Session</h3>
+                    <p>Start a new episode to load mock infrastructure.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Overlay for Grading Results -->
+    <div id="grade-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <h2>Episode Complete</h2>
+            
+            <div class="grade-section">
+                <h3>Cost Optimization (Easy)</h3>
+                <div id="easy-grade" class="grade-box"></div>
+            </div>
+
+            <div class="grade-section">
+                <h3>Production Protection (Hard)</h3>
+                <div id="hard-grade" class="grade-box"></div>
+            </div>
+
+            <button id="btn-close-modal" class="btn primary">Close</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

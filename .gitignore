@@ -1,6 +1,3 @@
-# Frontend (excluded per user request)
-web/
-
 # Python
 __pycache__/
 *.py[cod]
