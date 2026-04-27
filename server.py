@@ -77,7 +77,7 @@ async def lifespan(app):
 app = FastAPI(title='openenv-finops API', version='0.1.0', lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['*'], allow_headers=['*'])
 
-# ── API routes ── all must be registered BEFORE any app.mount('/') ──────────
+# ── All API routes FIRST ─────────────────────────────────────────────────────
 
 @app.get('/', include_in_schema=False)
 async def root():
@@ -140,8 +140,7 @@ async def reset():
     eid, rec = store.create()
     return {"episode_id": eid, "initial_observation": rec["initial_obs"]}
 
-# ── Static files LAST — a mount('/')  is a catch-all and must come after ────
-# ── all API routes, otherwise it intercepts them.                        ────
+# ── Static files LAST — mount the dashboard at /ui, after API routes ─────
 from fastapi.staticfiles import StaticFiles
 if os.path.exists('web'):
     app.mount('/ui', StaticFiles(directory='web', html=True), name='web')
