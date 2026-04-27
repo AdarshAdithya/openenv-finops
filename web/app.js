@@ -1,4 +1,4 @@
-const API_BASE = '/';
+const API_BASE = '';
 
 let currentSessionId = null;
 let currentStep = 0;
@@ -80,7 +80,6 @@ async function sendAction(cmd, targetId) {
     
     try {
         const payload = { action: { type: cmd === 'nop' ? 'noop' : (cmd === 'terminate' ? 'terminate_service' : 'scale_down') } };
-        // Baseline action transformer expects target_id in 'service' field
         if (targetId) payload.action.service = targetId;
 
         const data = await apiPost(`/episodes/${currentSessionId}/step`, payload);
@@ -105,11 +104,9 @@ async function sendAction(cmd, targetId) {
 
 // Renderer
 function updateUI(obs) {
-    // Top counters
     totalCostEl.textContent = obs.total_cost.toFixed(2);
     stepCounterEl.textContent = `${currentStep} / 10`;
     
-    // Grid
     grid.innerHTML = '';
     
     obs.resources.forEach(res => {
@@ -156,7 +153,6 @@ function updateUI(obs) {
     });
 }
 
-// Handle client-side animation before sending API trace
 window.triggerTerminate = function(id) {
     const el = document.getElementById(`res-${id}`);
     if (el) {
