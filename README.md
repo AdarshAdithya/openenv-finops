@@ -72,10 +72,12 @@ python eval.py --save results.json
 ### 4. Run the API server
 
 ```bash
-uvicorn server:app --reload --port 8000
+uvicorn server:app --reload --port 7860
 ```
 
-Swagger UI available at `http://localhost:8000/docs`.
+Swagger UI available at `http://localhost:7860/docs`.
+
+> Note: the frontend UI uses the current page origin for API calls. When deployed on Hugging Face Spaces, it will automatically call the same host and port as the served web app.
 
 ---
 
