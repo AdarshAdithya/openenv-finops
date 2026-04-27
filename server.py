@@ -77,6 +77,23 @@ async def lifespan(app):
 app = FastAPI(title='openenv-finops API', version='0.1.0', lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['*'], allow_headers=['*'])
 
+# ── API routes ── all must be registered BEFORE any app.mount('/') ──────────
+
+@app.get('/', include_in_schema=False)
+async def root():
+    return {
+        "name": "openenv-finops API",
+        "version": "0.1.0",
+        "docs": "/docs",
+        "endpoints": {
+            "health":   "GET  /health",
+            "episodes": "POST /episodes  |  GET /episodes",
+            "step":     "POST /episodes/{eid}/step",
+            "grade":    "GET  /episodes/{eid}/grade",
+            "reset":    "POST /reset",
+        }
+    }
+
 @app.get('/health', response_model=HealthResponse)
 async def health(): return HealthResponse(active_episodes=len(store.list_ids()))
 
@@ -118,10 +135,13 @@ async def grade_episode(eid: str):
 @app.delete('/episodes/{eid}', status_code=204)
 async def delete_episode(eid: str): store.delete(eid)
 
-from fastapi.staticfiles import StaticFiles
-if os.path.exists('web'): app.mount('/', StaticFiles(directory='web', html=True), name='web')
-
-@app.post("/reset")
+@app.post('/reset')
 async def reset():
     eid, rec = store.create()
     return {"episode_id": eid, "initial_observation": rec["initial_obs"]}
+
+# ── Static files LAST — a mount('/')  is a catch-all and must come after ────
+# ── all API routes, otherwise it intercepts them.                        ────
+from fastapi.staticfiles import StaticFiles
+if os.path.exists('web'):
+    app.mount('/ui', StaticFiles(directory='web', html=True), name='web')
