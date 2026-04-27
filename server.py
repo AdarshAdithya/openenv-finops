@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from typing import Any
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, Field
 
 try:
@@ -139,6 +140,10 @@ async def delete_episode(eid: str): store.delete(eid)
 async def reset():
     eid, rec = store.create()
     return {"episode_id": eid, "initial_observation": rec["initial_obs"]}
+
+@app.get('/ui', include_in_schema=False)
+async def ui_root():
+    return RedirectResponse(url='/ui/')
 
 # ── Static files LAST — mount the dashboard at /ui, after API routes ─────
 from fastapi.staticfiles import StaticFiles
