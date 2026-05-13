@@ -1,0 +1,102 @@
+{
+  "mode": "rule_based",
+  "total_reward": 49.49999999999999,
+  "num_steps": 10,
+  "steps": [
+    {
+      "step": 0,
+      "action": {
+        "type": "terminate_service",
+        "service": "dev-0",
+        "reason": "non-prod idle (0% util)"
+      },
+      "reward": 10.0,
+      "done": false
+    },
+    {
+      "step": 1,
+      "action": {
+        "type": "terminate_service",
+        "service": "dev-1",
+        "reason": "non-prod idle (0% util)"
+      },
+      "reward": 10.0,
+      "done": false
+    },
+    {
+      "step": 2,
+      "action": {
+        "type": "terminate_service",
+        "service": "dev-2",
+        "reason": "non-prod idle (0% util)"
+      },
+      "reward": 10.0,
+      "done": false
+    },
+    {
+      "step": 3,
+      "action": {
+        "type": "terminate_service",
+        "service": "dev-3",
+        "reason": "non-prod idle (0% util)"
+      },
+      "reward": 10.0,
+      "done": false
+    },
+    {
+      "step": 4,
+      "action": {
+        "type": "terminate_service",
+        "service": "dev-4",
+        "reason": "non-prod idle (0% util)"
+      },
+      "reward": 10.0,
+      "done": false
+    },
+    {
+      "step": 5,
+      "action": {
+        "type": "noop",
+        "reason": "nothing actionable"
+      },
+      "reward": -0.1,
+      "done": false
+    },
+    {
+      "step": 6,
+      "action": {
+        "type": "noop",
+        "reason": "nothing actionable"
+      },
+      "reward": -0.1,
+      "done": false
+    },
+    {
+      "step": 7,
+      "action": {
+        "type": "noop",
+        "reason": "nothing actionable"
+      },
+      "reward": -0.1,
+      "done": false
+    },
+    {
+      "step": 8,
+      "action": {
+        "type": "noop",
+        "reason": "nothing actionable"
+      },
+      "reward": -0.1,
+      "done": false
+    },
+    {
+      "step": 9,
+      "action": {
+        "type": "noop",
+        "reason": "nothing actionable"
+      },
+      "reward": -0.1,
+      "done": true
+    }
+  ]
+}
